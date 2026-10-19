@@ -82,28 +82,16 @@ export class App implements OnInit, OnDestroy {
     window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank', 'noopener,noreferrer');
   }
 
-  protected downloadCalendar(): void {
-    const calendar = [
-      'BEGIN:VCALENDAR',
-      'VERSION:2.0',
-      'PRODID:-//Wedding Invitation//EN',
-      'BEGIN:VEVENT',
-      `UID:wedding-${this.wedding.dateIso}@invitation`,
-      `DTSTAMP:${new Date().toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '')}`,
-      `DTSTART;VALUE=DATE:${this.wedding.dateIso.replace(/-/g, '')}`,
-      `DTEND;VALUE=DATE:${new Date(new Date(`${this.wedding.dateIso}T00:00:00Z`).getTime() + 86_400_000).toISOString().slice(0, 10).replace(/-/g, '')}`,
-      `SUMMARY:Wedding of ${this.wedding.groom} and ${this.wedding.bride}`,
-      `LOCATION:${this.wedding.address}`,
-      'END:VEVENT',
-      'END:VCALENDAR',
-    ].join('\r\n');
-    const blob = new Blob([calendar], { type: 'text/calendar;charset=utf-8' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'renolin-and-evanchelin-wedding.ics';
-    link.click();
-    URL.revokeObjectURL(url);
+  protected addToCalendar(): void {
+    const event = new URLSearchParams({
+      action: 'TEMPLATE',
+      text: `Wedding of ${this.wedding.groom} and ${this.wedding.bride}`,
+      dates: '20270118T100000/20270118T110000',
+      ctz: 'Asia/Kolkata',
+      details: `Wedding ceremony at 10:00 AM IST. Reception at ${this.wedding.reception}.\n\n${this.wedding.mapUrl}`,
+      location: this.wedding.address,
+    });
+    window.open(`https://calendar.google.com/calendar/render?${event.toString()}`, '_blank', 'noopener,noreferrer');
   }
 
   private updateCountdown(): void {
