@@ -1,0 +1,71 @@
+
+name: Deploy Angular to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular
+        run: npm run build -- --base-href /wedding-invitation/
+
+      - name: Prepare deployment files
+        shell: bash
+        run: |
+          set -e
+          mkdir -p deploy
+          if [ -f dist/wedding-invitation/browser/index.html ]; then
+            cp -a dist/wedding-invitation/browser/. deploy/
+          elif [ -f dist/wedding-invitation/index.html ]; then
+            cp -a dist/wedding-invitation/. deploy/
+          else
+            echo "Angular build output not found."
+            find dist -maxdepth 4 -name index.html
+            exit 1
+          fi
+          touch deploy/.nojekyll
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: deploy
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
