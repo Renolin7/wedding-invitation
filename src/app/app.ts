@@ -27,7 +27,7 @@ export class App implements OnInit, OnDestroy {
     dateIso: '2027-01-18',
     time: '10:00 AM',
     timezone: 'Indian Standard Time (IST)',
-    venue: 'CSI Church Punniyadi',
+    venue: 'CSI Church Punnaiyadi',
     address: 'CSI Church Rd, Punnaiyadi, South Thamarai Kulam, Thenthamaraikulam, Tamil Nadu 629701',
     mapUrl: 'https://maps.app.goo.gl/RM28ov4j3gz2ck2h8',
     reception: '6:00 PM at C.S.I PARISH HALL Pilankantuvilai',
