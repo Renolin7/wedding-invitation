@@ -464,9 +464,10 @@ h2 em {
 .hero-cross {
 	margin: 0 0 28px;
 	color: var(--gold);
-	font-size: 20px;
+	font-size: clamp(38px, 4.5vw, 60px);
+	line-height: 1;
 	letter-spacing: 0.2em;
-	opacity: 0.6;
+	opacity: 0.75;
 }
 
 /* ── Couple Gallery ──────────────────────── */
