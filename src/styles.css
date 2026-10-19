@@ -1,0 +1,42 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+	color-scheme: light;
+	--paper: #f8f5ee;
+	--paper-deep: #f1ece1;
+	--ink: #302d27;
+	--ink-soft: #706b60;
+	--gold: #b49a68;
+	--gold-deep: #887347;
+	--green: #455c49;
+	--serif: 'Cormorant Garamond', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+	--sans: 'DM Sans', 'Trebuchet MS', sans-serif;
+	font-family: var(--sans);
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	scroll-behavior: smooth;
+	background: var(--paper);
+}
+
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
+
+html {
+	min-width: 320px;
+	scroll-behavior: smooth;
+}
+
+body {
+	min-width: 320px;
+	margin: 0;
+}
+
+button,
+a {
+	-webkit-tap-highlight-color: transparent;
+}
